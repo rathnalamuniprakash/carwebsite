@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    stage('Verify Files') {
+    stage ('Verify Files') {
     steps {
         sh '''
         pwd
