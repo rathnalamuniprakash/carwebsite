@@ -1,6 +1,14 @@
 pipeline {
     agent any
 
+    stage('Verify Files') {
+    steps {
+        sh '''
+        pwd
+        ls -R
+        '''
+    }
+}
     stages {
         stage('Deploy') {
             steps {
