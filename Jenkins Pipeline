@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+
+    environment {
+        BUCKET_NAME = "your-s3-bucket-name"
+        DISTRIBUTION_ID = "YOUR_CLOUDFRONT_DISTRIBUTION_ID"
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                url: 'https://github.com/rathnalamuniprakash/carwebsite.git'
+            }
+        }
+
+        stage('Deploy to S3') {
+            steps {
+                sh '''
+                aws s3 sync . s3://$BUCKET_NAME --delete \
+                --exclude ".git/*" \
+                --exclude "Jenkinsfile"
+                '''
+            }
+        }
+
+        stage('Invalidate CloudFront Cache') {
+            steps {
+                sh '''
+                aws cloudfront create-invalidation \
+                --distribution-id $DISTRIBUTION_ID \
+                --paths "/*"
+                '''
+            }
+        }
+    }
+}
