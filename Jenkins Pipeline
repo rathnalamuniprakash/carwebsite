@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        BUCKET_NAME = "your-s3-bucket-name"
-        DISTRIBUTION_ID = "YOUR_CLOUDFRONT_DISTRIBUTION_ID"
+        BUCKET_NAME = "s3-demo-bucket-5432"
+        DISTRIBUTION_ID = "d32q8vlzlr4f0.cloudfront.net"
     }
 
     stages {
