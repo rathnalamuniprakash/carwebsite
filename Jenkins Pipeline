@@ -15,15 +15,16 @@ pipeline {
             }
         }
 
-        stage('Deploy to S3') {
-            steps {
-                sh '''
-                aws s3 sync . s3://$s3-demo-bucket-5432 --delete \
-                --exclude ".git/*" \
-                --exclude "Jenkinsfile"
-                '''
-            }
-        }
+        stage('Deploy') {
+    steps {
+        sh '''
+        /usr/bin/aws s3 sync . s3://s3-demo-bucket-5432 \
+          --delete \
+          --exclude ".git/*" \
+          --exclude "Jenkinsfile"
+        '''
+    }
+}
 
         stage('Invalidate CloudFront Cache') {
             steps {
