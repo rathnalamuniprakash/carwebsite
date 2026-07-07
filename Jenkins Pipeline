@@ -18,7 +18,7 @@ pipeline {
         stage('Deploy to S3') {
             steps {
                 sh '''
-                aws s3 sync . s3://$BUCKET_NAME --delete \
+                aws s3 sync . s3://$s3-demo-bucket-5432 --delete \
                 --exclude ".git/*" \
                 --exclude "Jenkinsfile"
                 '''
@@ -29,7 +29,7 @@ pipeline {
             steps {
                 sh '''
                 aws cloudfront create-invalidation \
-                --distribution-id $DISTRIBUTION_ID \
+                --distribution-id $d32q8vlzlr4f0.cloudfront.net \
                 --paths "/*"
                 '''
             }
